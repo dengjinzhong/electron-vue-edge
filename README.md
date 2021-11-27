@@ -1,24 +1,137 @@
-# electron-vue-edge
+# electron 踩坑之旅(三) —— electron + vue + edge
 
-## Project setup
+既然是前端来开发客户端, 前端界面绘制肯定不会使用原生开发, 那么如何在 `Electron` 呢, 这里我使用的是 `vue-cli-plugin-electron-builder`
+
+> [# Vue CLI Plugin Electron Builder](https://nklayman.github.io/vue-cli-plugin-electron-builder/)
+
+## 搭建 vue 环境
+
+具体搭建方法请参考 [Vue CLI](https://cli.vuejs.org/zh/guide/)
+
 ```
-yarn install
+npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+```
+#### 检查版本
+```
+vue --version
+```
+#### 创建项目
+```
+vue create electron-vue-edge
+```
+根据自己的需求选择对应的配置项
+
+#### 运行项目
+
+```
+cd electron-vue-edge
+yarn serve OR npm run serve
 ```
 
-### Compiles and hot-reloads for development
+## vue-cli-plugin-electron-builder
+
+使用插件在 `vue` 项目中集成 `Electron`
+
 ```
-yarn serve
+vue add electron-builder
+```
+运行过程中需要选择版本, 这里选择的是 `13.0.0` 版本
+
+#### 运行项目
+```
+npm run electron:serve
 ```
 
-### Compiles and minifies for production
+#### 打包项目
 ```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+npm run electron:build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## electron-edge-js
+
+具体如何使用可以参考 [# electron 踩坑之旅(二) —— 调用 .Net 的 DLL](https://juejin.cn/post/7035250118538297374)
+
+#### 安装
+```
+yarn add electron-edge-js -S
+```
+
+#### 使用
+```vue
+<template>
+  <div id="app">
+    <h1>Welcome to Your Vue.js App</h1>
+    <button @click="testEdge">testEdge</button>
+  </div>
+</template>
+
+<script>
+import edge from 'electron-edge-js'
+export default {
+  name: 'App',
+  methods: {
+    testEdge() {
+      const helloWorld = edge.func(function () {/*
+    async (input) => {
+        return ".NET Welcomes " + input.ToString();
+    }
+*/});
+      helloWorld('Electron', (error, value) => {
+        console.log(error, value)
+      })
+    }
+  }
+}
+</script>
+```
+
+#### 第一个坑
+
+此时会报第一个错
+
+```
+Uncaught ReferenceError: __dirname is not defined
+```
+
+我们需要在根目录创建 `vue.config.js`
+
+```
+module.exports = {
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true
+    }
+  }
+}
+```
+
+#### 第二个坑
+
+第二个报错
+
+```
+Uncaught Error: The edge module has not been pre-compiled for Electron version 13.6.2  . You must build a custom version of edge.node. Please refer to https://github.com/agracio/edge-js for building instructions.
+```
+
+我们需要对应配置
+
+```
+module.exports = {
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true,
+      externals: ['electron-edge-js']
+    }
+  }
+}
+```
+
+重新运行可以发现
+
+```
+undefined ".NET Welcomes Electron"
+```
+
+至此我们可以安全使用 `Electron` + `vue` + `edge` 

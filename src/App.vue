@@ -1,28 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Welcome to Your Vue.js App</h1>
+    <button @click="testEdge">testEdge</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import edge from 'electron-edge-js'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    testEdge() {
+      const helloWorld = edge.func(function () {/*
+    async (input) => {
+        return ".NET Welcomes " + input.ToString();
+    }
+*/});
+      helloWorld('Electron', (error, value) => {
+        console.log(error, value)
+      })
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
