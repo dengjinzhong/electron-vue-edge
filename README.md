@@ -135,3 +135,48 @@ undefined ".NET Welcomes Electron"
 ```
 
 至此我们可以安全使用 `Electron` + `vue` + `edge` 
+
+## 调用 Dll
+
+#### 准备 Dll 文件
+
+将 DLL 文件放入 `public/dll` 文件夹中
+
+#### 执行方法
+
+```HTML
+<button @click="testDll">testDll</button>
+```
+
+```JavaScript
+testDll() {
+  const Invoke = edge.func({
+    assemblyFile: 'public/dll/electronedge.dll',
+    typeName: "electronedge.MQ",
+    methodName: "Invoke"
+  })
+  Invoke('Electron', (error, value) => {
+    console.log(error, value)
+  })
+}
+```
+
+#### 执行结果
+
+```
+undefined "来自dll : 2021-11-27 23:05:48.924 Electron"
+```
+## 32 位 .net
+
+如果执行的 DLL 文件是按照 32 位编译的或者依赖了其他 32 为程序, 那么就需要安装对应 32 为 的 `Electron`
+```
+npm install --arch=ia32 electron
+```
+
+#### 编译 32 位程序
+最后打包程序的时候也要修改为 32 位的
+```json
+"script": {
+   "electron:build": "vue-cli-service electron:build --ia32"
+}
+```
