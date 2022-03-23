@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h3>edge 调用 Dell</h3>
+    <br>
     <el-button type="primary" @click="testEdge">testEdge</el-button>
     <el-button type="primary" @click="testDll">testDll</el-button>
   </div>

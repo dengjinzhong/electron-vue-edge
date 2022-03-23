@@ -16,6 +16,8 @@
     "core-js": "^3.6.5",
     "electron-edge-js": "^14.16.1",
     "element-ui": "^2.4.5",
+    "mysql": "^2.18.1",
+    "oracledb": "^5.3.0",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1"
   },

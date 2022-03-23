@@ -14,6 +14,11 @@ const routes = [
     path: '/Dell',
     name: 'Dell',
     component: () => import('../views/Dell')
+  },
+  {
+    path: '/DB',
+    name: 'DB',
+    component: () => import('../views/DB')
   }
 ]
 

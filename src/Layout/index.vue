@@ -15,8 +15,12 @@
             <span slot="title">首页</span>
           </el-menu-item>
           <el-menu-item index="Dell">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-document-remove"></i>
             <span slot="title">Dell</span>
+          </el-menu-item>
+          <el-menu-item index="DB">
+            <i class="el-icon-coin"></i>
+            <span slot="title">DB</span>
           </el-menu-item>
         </el-menu>
       </el-col>
