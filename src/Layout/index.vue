@@ -22,6 +22,10 @@
             <i class="el-icon-coin"></i>
             <span slot="title">DB</span>
           </el-menu-item>
+          <el-menu-item index="ActiveXObject">
+            <i class="el-icon-cpu"></i>
+            <span slot="title">ActiveXObject</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
       <el-col :span="18">

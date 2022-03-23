@@ -19,6 +19,11 @@ const routes = [
     path: '/DB',
     name: 'DB',
     component: () => import('../views/DB')
+  },
+  {
+    path: '/ActiveXObject',
+    name: 'ActiveXObject',
+    component: () => import('../views/ActiveXObject')
   }
 ]
 
